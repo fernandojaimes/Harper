@@ -52,10 +52,9 @@ def count_arguments(arguments):
         position = position + 1
 
 def main():
-    array = []
-    ec2 = boto3.client('ec2')
-    response = ec2.describe_instances()
-    instances_list = get_instance_data(response['Reservations'])
+    ec2_client = boto3.client('ec2')
+    instances_information = ec2_client.describe_instances()
+    instances_list = get_instance_data(instances_information['Reservations'])
     generate_table(instances_list)
 
 if __name__ == "__main__":
