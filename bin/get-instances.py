@@ -1,10 +1,6 @@
 import boto3
-import json
-import sys
 import texttable as tt
 from classes.instance import Instance
-
-arguments = len(sys.argv) - 1
 
 def get_instance_data(instances_list):
     vms_info = []
@@ -25,7 +21,7 @@ def get_values(instances_list, key):
 
 def generate_table(instances_list): 
     tab = tt.Texttable()
-    headings = ["Name", "Instance ID", "State", "Public DNS"]
+    headings = ["Name", "State", "Public DNS", "Instance ID"]
     tab.header(headings)
 
     names = get_values(instances_list, "name")
@@ -38,18 +34,6 @@ def generate_table(instances_list):
 
     s = tab.draw()
     print(s)
-
-def has_arguments(arguments):
-    if not arguments:
-        pass
-    else:
-        count_arguments(arguments)
-
-def count_arguments(arguments):
-    position = 1
-    while (arguments >= position):
-        print("$s" % sys.argv[position])
-        position = position + 1
 
 def main():
     ec2_client = boto3.client('ec2')
